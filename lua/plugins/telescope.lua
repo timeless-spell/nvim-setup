@@ -24,10 +24,10 @@ return {
 
 		telescope.setup({
 			defaults = {
-				prompt_prefix = "🔎 ",
+				prompt_prefix = "󰍉 ",
 				selection_caret = "▶️ ",
-				entry_prefix = "🔻 ",
-				multi_icon = "✔️ ",
+				entry_prefix = " ",
+				multi_icon = " ",
 				mappings = {
 					i = {
 						["<c-down>"] = actions.cycle_history_next,
