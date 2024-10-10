@@ -1,48 +1,78 @@
 return {
 	"mfussenegger/nvim-dap",
+	event = "VeryLazy",
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
 		"nvim-neotest/nvim-nio",
+		"williamboman/mason.nvim",
+		"jay-babu/mason-nvim-dap.nvim",
 		{ "theHamsta/nvim-dap-virtual-text", opts = {} },
 	},
+	keys = function(_, keys)
+		local dap = require("dap")
+		local dapui = require("dapui")
+		return {
+			{ "<F5>", dap.continue, desc = "Debug: Start/Continue" },
+			{ "<F1>", dap.step_into, desc = "Debug: Step Into" },
+			{ "<F2>", dap.step_over, desc = "Debug: Step Over" },
+			{ "<F3>", dap.step_out, desc = "Debug: Step Out" },
+			{ "<leader>db", dap.toggle_breakpoint, desc = "Debug: Toggle Breakpoint" },
+			{
+				"<leader>dB",
+				function()
+					dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+				end,
+				desc = "Debug: Set Breakpoint",
+			},
+			{ "<F7>", dapui.toggle, desc = "Debug: See last session result." },
+			unpack(keys),
+		}
+	end,
 	config = function()
-		-- DAP UI setup
+		local dap = require("dap")
 		local dapui = require("dapui")
 
-		dapui.setup()
+		require("mason-nvim-dap").setup({
+			-- Makes a best effort to setup the various debuggers with
+			-- reasonable debug configurations
+			automatic_installation = true,
 
-		vim.keymap.set("n", "<leader>de", dapui.eval, { desc = "[D]ap UI [E]val" })
-		vim.keymap.set("n", "<leader>do", dapui.open, { desc = "[D]ap UI [O]pen" })
-		vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "[D]ap UI [C]lose" })
-		vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "[D]ap UI [T]oggle" })
-		vim.keymap.set("n", "<leader>df", dapui.float_element, { desc = "[D]ap UI [F]loat Element" })
+			-- You can provide additional configuration to the handlers,
+			-- see mason-nvim-dap README for more information
+			handlers = {},
 
-		-- DAP setup
-		local dap = require("dap")
+			-- You'll need to check that you have the required things installed
+			-- online, please don't ask me how to install them :)
+			ensure_installed = {
+				-- Update this to ensure that you have the debuggers for the langs you want
+				"delve",
+			},
+		})
 
-		vim.keymap.set("n", "<F5>", dap.continue, { desc = "[F1] Continue" })
-		vim.keymap.set("n", "<F6>", dap.step_over, { desc = "[F2] Step Over" })
-		vim.keymap.set("n", "<F7>", dap.step_into, { desc = "[F3] Step Into" })
-		vim.keymap.set("n", "<F8>", dap.step_out, { desc = "[F4] Step Out" })
-		vim.keymap.set("n", "<leader>dtB", dap.toggle_breakpoint, { desc = "[T]oggle [B]reakpoint" })
-		vim.keymap.set("n", "<leader>B", dap.set_breakpoint, { desc = "[B]reakpoint" })
-		-- vim.keymap.set("n", "<Leader>lp", dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")))
-		-- vim.keymap.set("n", "<leader>dr", dap.repl.open)
-		-- vim.keymap.set("n", "<leader>dl", dap.run_last)
-		-- vim.keymap.set({ "n", "v" }, "<Leader>dh", require("dap.ui.widgets").hover())
-		-- vim.keymap.set({ "n", "v" }, "<Leader>dp", require("dap.ui.widgets").preview())
-		-- vim.keymap.set("n", "<leader>df", function()
-		-- local widgets = require("dap.ui.widgets")
-		-- 	widgets.centered_float(widgets.frames)
-		-- end)
-		-- vim.keymap.set("n", "<leader>ds", function()
-		-- 	local widgets = require("dap.ui.widgets")
-		-- 	widgets.centered_float(widgets.scopes)
-		-- end)
-		vim.keymap.set("n", "<leader>de", dapui.eval, { desc = "[D]ap UI [E]val" })
-		vim.keymap.set("n", "<leader>do", dapui.open, { desc = "[D]ap UI [O]pen" })
-		vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "[D]ap UI [C]lose" })
-		vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "[D]ap UI [T]oggle" })
-		vim.keymap.set("n", "<leader>df", dapui.float_element, { desc = "[D]ap UI [F]loat Element" })
+		-- Dap UI setup
+		-- For more information, see |:help nvim-dap-ui|
+		dapui.setup({
+			-- Set icons to characters that are more likely to work in every terminal.
+			--    Feel free to remove or use ones that you like more! :)
+			--    Don't feel like these are good choices.
+			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
+			controls = {
+				icons = {
+					pause = "⏸",
+					play = "▶",
+					step_into = "⏎",
+					step_over = "⏭",
+					step_out = "⏮",
+					step_back = "b",
+					run_last = "▶▶",
+					terminate = "⏹",
+					disconnect = "⏏",
+				},
+			},
+		})
+
+		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+		dap.listeners.before.event_exited["dapui_config"] = dapui.close
 	end,
 }
