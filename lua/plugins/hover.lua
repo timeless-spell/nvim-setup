@@ -2,7 +2,7 @@ return {
 	"lewis6991/hover.nvim",
 	keys = function(_, keys)
 		local hover = require("hover")
-		local keys = {
+		return {
 			{
 				"<leader>K",
 				function()
@@ -25,7 +25,6 @@ return {
 				desc = "Mouse Hover",
 			},
 		}
-		return keys
 	end,
 	opts = {
 		init = function()
