@@ -1,39 +1,80 @@
 return {
 	"echasnovski/mini.nvim",
 	version = false,
-	event = "VeryLazy",
-	keys = {
-		{
-			"<leader>mf",
-			function()
-				require("mini.files").open()
-			end,
-			desc = "Mini Files Open",
-		},
-	},
 	config = function()
+		local map = vim.keymap.set
+
+		-- [[ Mini.ai ]]
 		require("mini.ai").setup()
+
+		-- [[ Mini.cursorword ]]
 		require("mini.comment").setup()
+
+		-- [[ Mini.cursorword ]]
 		require("mini.cursorword").setup()
+
+		-- [[ Mini.move ]]
 		require("mini.move").setup()
+
+		-- [[ Mini.surround ]]
 		require("mini.surround").setup({
 			mappings = {
-				add = "msa", -- Add surrounding in Normal and Visual modes
-				delete = "msd", -- Delete surrounding
-				find = "msf", -- Find surrounding (to the right)
-				find_left = "msF", -- Find surrounding (to the left)
-				highlight = "msh", -- Highlight surrounding
-				replace = "msr", -- Replace surrounding
-				update_n_lines = "msn", -- Update `n_lines`
+				add = "msa",
+				delete = "msd",
+				find = "msf",
+				find_left = "msF",
+				highlight = "msh",
+				replace = "msr",
+				update_n_lines = "msn",
 
-				suffix_last = "l", -- Suffix to search with "prev" method
-				suffix_next = "n", -- Suffix to search with "next" method
+				suffix_last = "l",
+				suffix_next = "n",
 			},
 		})
-		require("mini.files").setup({
+
+		-- [[ Mini.files ]]
+		local files = require("mini.files")
+		files.setup({
 			options = {
 				use_as_default_explorer = false,
 			},
+		})
+		map("n", "<leader>mf", function()
+			files.open()
+		end, { desc = "Mini Files Open" })
+
+		-- [[ Mini.starter ]]
+		local starter = require("mini.starter")
+		starter.setup({
+			header = require("config.ascii").neovim1,
+			-- TODO: Add more items
+			items = {
+				{
+					name = "Load Session",
+					action = "ResessionLoad",
+					section = "Resession",
+				},
+				{
+					name = "Lazy",
+					action = "Lazy",
+					section = "Lazy",
+				},
+				{
+					name = "Find Files",
+					action = 'Telescope find_files layout_config={"width":0.95,"preview_width":0.6,"height":0.95}',
+					section = "Telescope",
+				},
+				{
+					name = "File Browser",
+					action = 'Telescope file_browser file_browser previewer=true layout_strategy=bottom_pane layout_config={"height":0.85}',
+					section = "Telescope",
+				},
+			},
+			content_hooks = {
+				starter.gen_hook.adding_bullet(),
+				starter.gen_hook.aligning("center", "center"),
+			},
+			footer = os.date(),
 		})
 	end,
 }
