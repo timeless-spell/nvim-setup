@@ -4,19 +4,19 @@ return {
 	config = function()
 		local map = vim.keymap.set
 
-		-- [[ Mini.ai ]]
+		-- [[ Mini ai ]]
 		require("mini.ai").setup()
 
-		-- [[ Mini.cursorword ]]
+		-- [[ Mini cursorword ]]
 		require("mini.comment").setup()
 
-		-- [[ Mini.cursorword ]]
+		-- [[ Mini cursorword ]]
 		require("mini.cursorword").setup()
 
-		-- [[ Mini.move ]]
+		-- [[ Mini move ]]
 		require("mini.move").setup()
 
-		-- [[ Mini.surround ]]
+		-- [[ Mini surround ]]
 		require("mini.surround").setup({
 			mappings = {
 				add = "msa",
@@ -32,18 +32,20 @@ return {
 			},
 		})
 
-		-- [[ Mini.files ]]
+		-- [[ Mini files ]]
 		local files = require("mini.files")
 		files.setup({
 			options = {
 				use_as_default_explorer = false,
 			},
 		})
+
 		map("n", "<leader>mf", function()
 			files.open()
 		end, { desc = "Mini Files Open" })
 
-		-- [[ Mini.starter ]]
+		-- [[ Mini starter ]]
+		vim.cmd([[:hi MiniStarterHeader guifg=#87C144]])
 		local starter = require("mini.starter")
 		starter.setup({
 			header = require("config.ascii").neovim1,
@@ -51,7 +53,7 @@ return {
 			items = {
 				{
 					name = "Load Session",
-					action = "ResessionLoad",
+					action = "lua require('resession').load()",
 					section = "Resession",
 				},
 				{
@@ -67,6 +69,11 @@ return {
 				{
 					name = "File Browser",
 					action = 'Telescope file_browser file_browser previewer=true layout_strategy=bottom_pane layout_config={"height":0.85}',
+					section = "Telescope",
+				},
+				{
+					name = "Recent Files",
+					action = 'Telescope oldfiles previewer=false layout_strategy=vertical layout_config={"width":0.8,"prompt_position":"top"}',
 					section = "Telescope",
 				},
 			},
