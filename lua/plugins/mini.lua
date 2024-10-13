@@ -76,6 +76,10 @@ return {
 					action = 'Telescope oldfiles previewer=false layout_strategy=vertical layout_config={"width":0.8,"prompt_position":"top"}',
 					section = "Telescope",
 				},
+				{
+					name = "Neovim Config",
+					action = 'Telescope find_files cwd=$HOME/.config/nvim layout_config={"width":0.95,"preview_width":0.6,"height":0.95}'
+				},
 			},
 			content_hooks = {
 				starter.gen_hook.adding_bullet(),
