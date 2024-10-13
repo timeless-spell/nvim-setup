@@ -78,7 +78,8 @@ return {
 				},
 				{
 					name = "Neovim Config",
-					action = 'Telescope find_files cwd=$HOME/.config/nvim layout_config={"width":0.95,"preview_width":0.6,"height":0.95}'
+					action = 'Telescope find_files cwd=$HOME/.config/nvim layout_config={"width":0.95,"preview_width":0.6,"height":0.95}',
+					section = "Telescope",
 				},
 			},
 			content_hooks = {
