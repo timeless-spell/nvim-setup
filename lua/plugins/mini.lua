@@ -61,6 +61,7 @@ return {
 					action = "Lazy",
 					section = "Lazy",
 				},
+				{ name = "Fzf Global", action = "FZF $HOME", section = "FZF" },
 				{
 					name = "Find Files",
 					action = 'Telescope find_files layout_config={"width":0.95,"preview_width":0.6,"height":0.95}',
@@ -77,9 +78,14 @@ return {
 					section = "Telescope",
 				},
 				{
-					name = "Neovim Config",
+					name = "Config",
 					action = 'Telescope find_files cwd=$HOME/.config/nvim layout_config={"width":0.95,"preview_width":0.6,"height":0.95}',
-					section = "Telescope",
+					section = "Neovim",
+				},
+				{
+					name = "Nvim",
+					action = 'Telescope file_browser file_browser path=$HOME/.config/nvim previewer=true layout_strategy=bottom_pane layout_config={"height":0.85}',
+					section = "Neovim",
 				},
 			},
 			content_hooks = {
