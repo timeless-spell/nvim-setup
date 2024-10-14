@@ -160,8 +160,12 @@ return {
 				{ name = "emoji" },
 				{ name = "nerdfont" },
 				{ name = "nvim_lua" },
+				{ name = "codeium"},
 				{ name = "buffer", option = { keyword_lenght = 4, indexing_interval = 50, indexing_batch_size = 500 } },
-				-- { name = "css-variables" },
+				{
+					name = "lazydev",
+					group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+				},
 			},
 		})
 
