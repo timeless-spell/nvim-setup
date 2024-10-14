@@ -7,7 +7,8 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 		-- Allows extra capabilities provided by nvim-cmp
-		"hrsh7th/cmp-nvim-lsp",
+		-- "hrsh7th/cmp-nvim-lsp",
+		{ "iguanacucumber/magazine.nvim", name = "nvim-cmp" },
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
