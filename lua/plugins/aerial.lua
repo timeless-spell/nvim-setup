@@ -1,8 +1,9 @@
 return {
 	{
 		"stevearc/aerial.nvim",
+		event = "VeryLazy",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		keys = { { "<leader>a", "<CMD>AerialToggle!<CR>", desc = "Aerial Toggle" } },
+		keys = { { "<leader>a", "<cmd>AerialToggle!<cr>", desc = "Aerial Toggle" } },
 		opts = {
 			layout = { default_direction = "prefer_left", width = 40 },
 			on_attach = function(bufnr)

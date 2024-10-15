@@ -1,18 +1,15 @@
 return {
 	"ibhagwan/fzf-lua",
+	cmd = "FzfLua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	keys = function(_, keys)
-		local fzf = require("fzf-lua")
-
-		return {
-			{
-				"<leader>Ff",
-				function()
-					fzf.files()
-				end,
-				desc = "Fzf files",
-			},
-		}
-	end,
+	keys = {
+		{
+			"<leader>Ff",
+			function()
+				require("fzf-lua").files()
+			end,
+			desc = "Fzf files",
+		},
+	},
 	opts = {},
 }

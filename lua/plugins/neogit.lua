@@ -1,6 +1,5 @@
 return {
 	"NeogitOrg/neogit",
-	event = "VeryLazy",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"sindrets/diffview.nvim",
@@ -9,5 +8,5 @@ return {
 	keys = {
 		{ "<leader>ng", "<cmd>Neogit<cr>", desc = "Neogit" },
 	},
-	config = true,
+	opts = {},
 }

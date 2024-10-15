@@ -35,10 +35,7 @@ return {
 		{ "mtoohey31/cmp-fish", ft = "fish" },
 		"hrsh7th/cmp-emoji",
 		"chrisgrieser/cmp-nerdfont",
-		"hrsh7th/cmp-nvim-lua",
-		-- NOTE: check README before use:
-		-- "roginfarrer/cmp-css-variables"
-
+		-- "hrsh7th/cmp-nvim-lua", --NOTE: Probably not needed anymore. Testing.
 		"onsails/lspkind.nvim",
 		"brenoprata10/nvim-highlight-colors",
 	},
@@ -160,10 +157,7 @@ return {
 				{ name = "fish" },
 				{ name = "emoji" },
 				{ name = "nerdfont" },
-				{ name = "nvim_lua" },
 				{ name = "buffer", option = { keyword_lenght = 4, indexing_interval = 50, indexing_batch_size = 500 } },
-				{ name = "lazydev", group_index = 0 },
-				{ name = "codeium" },
 			},
 		})
 

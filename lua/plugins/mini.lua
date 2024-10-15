@@ -1,5 +1,6 @@
 return {
 	"echasnovski/mini.nvim",
+	event = "VeryLazy",
 	version = false,
 	config = function()
 		local map = vim.keymap.set
@@ -57,11 +58,11 @@ return {
 					section = "Resession",
 				},
 				{
-					name = "Lazy",
+					name = "Lazy Nvim",
 					action = "Lazy",
 					section = "Lazy",
 				},
-				{ name = "Fzf Global", action = "FZF $HOME", section = "FZF" },
+				{ name = "Fzf Global", action = "FZF ~", section = "FZF" },
 				{
 					name = "Find Files",
 					action = 'Telescope find_files layout_config={"width":0.95,"preview_width":0.6,"height":0.95}',

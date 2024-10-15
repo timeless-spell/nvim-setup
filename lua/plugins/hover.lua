@@ -1,31 +1,28 @@
 return {
 	"lewis6991/hover.nvim",
-	keys = function(_, keys)
-		local hover = require("hover")
-		return {
-			{
-				"<leader>K",
-				function()
-					hover.hover()
-				end,
-				desc = "Hover",
-			},
-			{
-				"<leader>gK",
-				function()
-					hover.hover_select()
-				end,
-				desc = "Hover Select",
-			},
-			{
-				"<mousemove>",
-				function()
-					hover.hover_mouse()
-				end,
-				desc = "Mouse Hover",
-			},
-		}
-	end,
+	keys = {
+		{
+			"<leader>K",
+			function()
+				require("hover").hover()
+			end,
+			desc = "Hover",
+		},
+		{
+			"<leader>gK",
+			function()
+				require("hover").hover_select()
+			end,
+			desc = "Hover Select",
+		},
+		{
+			"<mousemove>",
+			function()
+				require("hover").hover_mouse()
+			end,
+			desc = "Mouse Hover",
+		},
+	},
 	opts = {
 		init = function()
 			require("hover.providers.lsp")
