@@ -35,6 +35,51 @@ return {
 			},
 		})
 
+		dap.adapters["pwa-node"] = {
+			type = "server",
+			host = "localhost",
+			port = "${port}",
+			executable = {
+				command = "node",
+				args = { js_adapter, "${port}" },
+			},
+		}
+
+		local languages = { "typescript", "javascript" }
+
+		for _, language in ipairs(languages) do
+			dap.configurations[language] = {
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Node",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					type = "pwa-node",
+					request = "launch",
+					name = "Deno",
+					runtimeExecutable = "deno",
+					runtimeArgs = {
+						"run",
+						"--inspect-wait",
+						"--allow-all",
+					},
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+					attachSimplePort = 9229,
+				},
+				{
+					type = "pwa-node",
+					request = "attach",
+					name = "Attach",
+					pid = require("dap.utils").pick_process,
+					cwd = "${workspaceFolder}",
+				},
+			}
+		end
+
 		dapui.setup()
 
 		dap.listeners.after.event_initialized["dapui_config"] = dapui.open

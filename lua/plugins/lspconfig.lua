@@ -7,6 +7,9 @@ return {
 		"saghen/blink.cmp",
 	},
 	config = function()
+		local lspconfig = require("lspconfig")
+		local lsputil = require("lspconfig.util")
+
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
@@ -60,6 +63,10 @@ return {
 
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+		vim.g.markdown_fenced_languages = {
+			"ts=typescript",
+		}
+
 		local servers = {
 			lua_ls = {
 				-- cmd = { ... },
@@ -81,17 +88,43 @@ return {
 					},
 				},
 			},
+			ts_ls = { autostart = false },
+			html = {
+				settings = {
+					html = {
+						format = {
+							templating = true,
+							wrapLineLength = 120,
+							wrapAttributes = "auto",
+						},
+						hover = {
+							documentation = true,
+							references = true,
+						},
+					},
+				},
+			},
+			astro = {},
+			biome = {},
+			volar = {},
+			tailwindcss = { autostart = false },
 		}
 
 		require("mason").setup({
 			ui = {
 				border = "rounded",
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
 			},
 		})
 
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"stylua",
+			"js-debug-adapter",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -102,6 +135,46 @@ return {
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 					require("lspconfig")[server_name].setup(server)
 				end,
+			},
+		})
+
+		lspconfig.denols.setup({
+			capabilities = capabilities,
+			single_file_support = false,
+			root_dir = lsputil.root_pattern({ "deno.json", "deno.jsonc" }),
+			settings = {
+				deno = {
+					codeLens = {
+						implementations = true,
+						references = true,
+						referencesAllFunctions = true,
+						test = true,
+					},
+					inlayHints = {
+						parameterNames = {
+							enabled = "all",
+						},
+						parameterTypes = {
+							enabled = true,
+						},
+						variableTypes = {
+							enabled = true,
+						},
+						propertyDeclarationTypes = {
+							enabled = true,
+						},
+						functionLikeReturnTypes = {
+							enabled = true,
+						},
+						enumMemberValues = {
+							enabled = true,
+						},
+					},
+					suggest = {
+						paths = true,
+						autoimports = true,
+					},
+				},
 			},
 		})
 	end,
