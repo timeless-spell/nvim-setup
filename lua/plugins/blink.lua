@@ -19,10 +19,27 @@ return {
             keymap = {
                 preset = "default",
                 cmdline = {
-                    preset = "default",
+                    ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+                    ["<C-e>"] = { "hide", "fallback" },
+                    ["<CR>"] = { "accept", "fallback" },
+
+                    ["<S-Tab>"] = { "select_prev", "fallback" },
+                    ["<Tab>"] = { "select_next", "fallback" },
+
+                    ["<C-y>"] = { "select_and_accept" },
+
+                    ["<C-p>"] = { "select_prev", "fallback" },
+                    ["<C-n>"] = { "select_next", "fallback" },
                 },
             },
             completion = {
+                list = {
+                    selection = {
+                        preselect = function(ctx)
+                            return ctx.mode ~= "cmdline"
+                        end,
+                    },
+                },
                 menu = {
                     max_height = 20,
                     border = "solid",
