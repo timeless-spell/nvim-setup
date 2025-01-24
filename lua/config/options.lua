@@ -29,14 +29,14 @@ set.list = true
 set.listchars = { tab = "| ", eol = "󰘌" }
 
 gset.clipboard = {
-	name = "win32yank-wsl",
-	copy = {
-		["+"] = "win32yank.exe -i --crlf",
-		["*"] = "win32yank.exe -i --crlf",
-	},
-	paste = {
-		["+"] = "win32yank.exe -i --lf",
-		["*"] = "win32yank.exe -i --lf",
-	},
-	cache_enabled = 0,
+    name = "win32yank-wsl",
+    copy = {
+        ["+"] = "win32yank.exe -i --crlf",
+        ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+        ["+"] = "win32yank.exe -i --lf",
+        ["*"] = "win32yank.exe -i --lf",
+    },
+    cache_enabled = 0,
 }

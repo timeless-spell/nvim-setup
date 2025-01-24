@@ -20,14 +20,44 @@ map("n", "<c-j>", "<c-w><c-j>", { desc = "Move focus to the lower window" })
 map("n", "<c-k>", "<c-w><c-k>", { desc = "Move focus to the upper window" })
 
 -- Naviagate buffers
-map("n", "<a-a>", "<CMD>bnext<cr>", { noremap = true, silent = true, desc = "Navigate next buffer" })
-map("n", "<a-s>", "<CMD>bprevious<cr>", { noremap = true, silent = true, desc = "Navigate previous buffer" })
+map(
+    "n",
+    "<a-a>",
+    "<CMD>bnext<cr>",
+    { noremap = true, silent = true, desc = "Navigate next buffer" }
+)
+map(
+    "n",
+    "<a-s>",
+    "<CMD>bprevious<cr>",
+    { noremap = true, silent = true, desc = "Navigate previous buffer" }
+)
 
 -- Modify Split Size
-map("n", "<c-up>", "<CMD>resize -2<CR><cr>", { noremap = true, silent = true, desc = "Resize split Up" })
-map("n", "<c-down>", "<CMD>resize +2<CR><cr>", { noremap = true, silent = true, desc = "Resize split Down" })
-map("n", "<c-left>", "<CMD>vertical resize -2<cr>", { noremap = true, silent = true, desc = "Resize split Left" })
-map("n", "<c-right>", "<CMD>vertical resize +2<cr>", { noremap = true, silent = true, desc = "Resize split Right" })
+map(
+    "n",
+    "<c-up>",
+    "<CMD>resize -2<CR><cr>",
+    { noremap = true, silent = true, desc = "Resize split Up" }
+)
+map(
+    "n",
+    "<c-down>",
+    "<CMD>resize +2<CR><cr>",
+    { noremap = true, silent = true, desc = "Resize split Down" }
+)
+map(
+    "n",
+    "<c-left>",
+    "<CMD>vertical resize -2<cr>",
+    { noremap = true, silent = true, desc = "Resize split Left" }
+)
+map(
+    "n",
+    "<c-right>",
+    "<CMD>vertical resize +2<cr>",
+    { noremap = true, silent = true, desc = "Resize split Right" }
+)
 
 -- [[ Diagnostic keymaps ]]
 map("n", "<leader>ll", vim.diagnostic.setloclist, { desc = "Open diagnostic [L]ocation list" })
