@@ -225,12 +225,7 @@ return {
                     })
                 end, { desc = "[L]SP [I]mplementation" })
 
-                map(
-                    "n",
-                    "<leader>tlD",
-                    builtin.lsp_type_definitions,
-                    { desc = "[L]SP Type [D]efinition" }
-                )
+                map("n", "<leader>tlD", builtin.lsp_type_definitions, { desc = "[L]SP Type [D]efinition" })
 
                 map("n", "<leader>tlo", function()
                     builtin.lsp_document_symbols({ layout_config = { width = 0.95, height = 0.95 } })

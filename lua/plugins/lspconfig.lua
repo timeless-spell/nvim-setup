@@ -30,14 +30,8 @@ return {
                 map("<leader>lds", vim.lsp.buf.document_symbol, "[D]ocument [S]ymbol")
 
                 local client = vim.lsp.get_client_by_id(event.data.client_id)
-                if
-                    client
-                    and client.supports_method(
-                        vim.lsp.protocol.Methods.textDocument_documentHighlight
-                    )
-                then
-                    local highlight_augroup =
-                        vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+                if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+                    local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
                     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
                         buffer = event.buf,
                         group = highlight_augroup,
@@ -62,14 +56,9 @@ return {
                     })
                 end
 
-                if
-                    client
-                    and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint)
-                then
+                if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
                     map("<leader>lht", function()
-                        vim.lsp.inlay_hint.enable(
-                            not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
-                        )
+                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
                     end, "[T]oggle Inlay [H]ints")
                 end
             end,
@@ -146,8 +135,7 @@ return {
             handlers = {
                 function(server_name)
                     local server = servers[server_name] or {}
-                    server.capabilities =
-                        vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                    server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
                     require("lspconfig")[server_name].setup(server)
                 end,
             },
