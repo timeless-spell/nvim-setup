@@ -12,30 +12,34 @@ return {
 			"moyiz/blink-emoji.nvim",
 			"mtoohey31/cmp-fish",
 			"chrisgrieser/cmp-nerdfont",
+			"brenoprata10/nvim-highlight-colors",
 		},
 		version = "*",
 		opts = {
 			keymap = {
 				preset = "default",
 				cmdline = {
-					preset = "default",
-					-- ["<C-space>"] = { "show" },
-					-- ["<C-e>"] = { "hide", "fallback" },
-					-- ["<CR>"] = { "accept", "fallback" },
-					--
-					-- ["<Tab>"] = { "select_next", "fallback" },
-					-- ["<S-Tab>"] = { "select_prev", "fallback" },
-					--
-					-- ["<Up>"] = { "select_prev", "fallback" },
-					-- ["<Down>"] = { "select_next", "fallback" },
-					-- ["<C-p>"] = { "select_prev", "fallback" },
-					-- ["<C-n>"] = { "select_next", "fallback" },
-					--
-					-- ["<C-b>"] = {},
-					-- ["<C-f>"] = {},
+					["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+					["<C-e>"] = { "hide", "fallback" },
+					["<CR>"] = { "accept", "fallback" },
+
+					["<S-Tab>"] = { "select_prev", "fallback" },
+					["<Tab>"] = { "select_next", "fallback" },
+
+					["<C-y>"] = { "select_and_accept" },
+
+					["<C-p>"] = { "select_prev", "fallback" },
+					["<C-n>"] = { "select_next", "fallback" },
 				},
 			},
 			completion = {
+				list = {
+					selection = {
+						preselect = function(ctx)
+							return ctx.mode ~= "cmdline"
+						end,
+					},
+				},
 				menu = {
 					max_height = 20,
 					border = "solid",
@@ -44,44 +48,46 @@ return {
 						columns = {
 							{ "label", "label_description", gap = 1 },
 							{ "kind_icon", "kind", gap = 1 },
-							{ "source_name" },
+							{ "source_name", gap = 1 },
 						},
 						components = {
-							-- NOTE: Still testing this feature
 							kind_icon = {
 								ellipsis = false,
 								text = function(ctx)
-									local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+									local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
 									if ctx.item.source_name == "LSP" then
 										local color_item = require("nvim-highlight-colors").format(
 											ctx.item.documentation,
 											{ kind = ctx.kind }
 										)
 										if color_item and color_item.abbr then
-											kind_icon = color_item.abbr
+											icon = icon .. " " .. color_item.abbr
 										end
 									end
-									return kind_icon .. ctx.icon_gap
+									return icon .. ctx.icon_gap
 								end,
 								highlight = function(ctx)
-									local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-
+									local _, highlight, _ = require("mini.icons").get("lsp", ctx.kind)
 									if ctx.item.source_name == "LSP" then
 										local color_item = require("nvim-highlight-colors").format(
 											ctx.item.documentation,
 											{ kind = ctx.kind }
 										)
 										if color_item and color_item.abbr_hl_group then
-											hl = color_item.abbr_hl_group
+											highlight = color_item.abbr_hl_group
 										end
 									end
-									return hl
+									return highlight
 								end,
 							},
 						},
 					},
 				},
-				documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = "solid" } },
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 500,
+					window = { border = "solid" },
+				},
 			},
 			signature = {
 				enabled = true,
