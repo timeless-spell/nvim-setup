@@ -115,5 +115,7 @@ return {
       },
       footer = os.date(),
     })
+
+    map('n', '<leader>ms', starter.open, { desc = 'Mini Starter' })
   end,
 }
