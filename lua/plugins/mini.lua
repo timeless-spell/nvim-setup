@@ -3,7 +3,6 @@ return {
 	dependencies = {
 		"JoosepAlviste/nvim-ts-context-commentstring",
 	},
-	event = "VeryLazy",
 	version = false,
 	config = function()
 		local map = vim.keymap.set
@@ -115,5 +114,7 @@ return {
 			},
 			footer = os.date(),
 		})
+
+		map("n", "<leader>ms", starter.open, { desc = "Mini Starter" })
 	end,
 }
