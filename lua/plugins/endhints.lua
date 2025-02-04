@@ -1,5 +1,5 @@
 return {
-	"chrisgrieser/nvim-lsp-endhints",
-	event = "LspAttach",
-	opts = {},
+  'chrisgrieser/nvim-lsp-endhints',
+  event = 'LspAttach',
+  opts = {},
 }
