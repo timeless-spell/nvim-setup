@@ -194,7 +194,7 @@ return {
             })
         end, { desc = "[S]earch [K]eymaps" })
 
-        map("n", "<leader>tl", function()
+        map("n", "<leader>tz", function()
             builtin.find_files({
                 cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
                 hidden = true,
