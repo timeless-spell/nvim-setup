@@ -24,7 +24,7 @@ return {
 		},
 		{
 			mode = "x",
-			"s",
+			"S",
 			function()
 				require("substitute").visual()
 			end,
