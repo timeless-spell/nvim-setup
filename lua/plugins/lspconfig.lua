@@ -8,7 +8,8 @@ return {
     },
     config = function()
         local lspconfig = require("lspconfig")
-        local lsputil = require("lspconfig.util")
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
+        local mason_registry = require("mason-registry")
 
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -64,11 +65,11 @@ return {
             end,
         })
 
-        local capabilities = require("blink.cmp").get_lsp_capabilities()
-
         vim.g.markdown_fenced_languages = {
             "ts=typescript",
         }
+
+        local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
 
         local servers = {
             lua_ls = {
@@ -91,7 +92,6 @@ return {
                     },
                 },
             },
-            ts_ls = { autostart = false },
             html = {
                 settings = {
                     html = {
@@ -106,6 +106,20 @@ return {
                         },
                     },
                 },
+            },
+            ts_ls = {
+                init_options = {
+                    plugins = {
+                        {
+                            name = "@vue/typescript-plugin",
+                            location = vue_language_server_path,
+                            languages = { "vue" },
+                        },
+                    },
+                },
+                filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+                single_file_support = false,
+                settings = require("settings.ts_ls").settings,
             },
             astro = {},
             biome = {},
@@ -144,41 +158,8 @@ return {
         lspconfig.denols.setup({
             capabilities = capabilities,
             single_file_support = false,
-            root_dir = lsputil.root_pattern({ "deno.json", "deno.jsonc" }),
-            settings = {
-                deno = {
-                    codeLens = {
-                        implementations = true,
-                        references = true,
-                        referencesAllFunctions = true,
-                        test = true,
-                    },
-                    inlayHints = {
-                        parameterNames = {
-                            enabled = "all",
-                        },
-                        parameterTypes = {
-                            enabled = true,
-                        },
-                        variableTypes = {
-                            enabled = true,
-                        },
-                        propertyDeclarationTypes = {
-                            enabled = true,
-                        },
-                        functionLikeReturnTypes = {
-                            enabled = true,
-                        },
-                        enumMemberValues = {
-                            enabled = true,
-                        },
-                    },
-                    suggest = {
-                        paths = true,
-                        autoimports = true,
-                    },
-                },
-            },
+            root_dir = vim.fs.root(0, { "deno.json", "deno.jsonc" }),
+            settings = require("settings.denols").settings,
         })
     end,
 }
