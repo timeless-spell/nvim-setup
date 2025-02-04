@@ -1,5 +1,5 @@
 return {
-    "NMAC427/guess-indent.nvim",
-    event = "VeryLazy",
-    opts = {},
+  'NMAC427/guess-indent.nvim',
+  event = 'VeryLazy',
+  opts = {},
 }
