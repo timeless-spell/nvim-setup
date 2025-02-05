@@ -44,7 +44,8 @@ return {
         css = { 'biome', 'deno_fmt', stop_after_first = true },
         astro = { 'prettier' },
         vue = { 'prettier' },
-        markdown = { 'deno_fmt' },
+        -- markdown = { 'deno_fmt' },
+        yaml = { 'yamlfmt' },
       },
       default_format_opts = {
         lsp_format = 'fallback',
