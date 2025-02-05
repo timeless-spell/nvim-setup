@@ -55,6 +55,13 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
           end, '[T]oggle Inlay [H]ints')
         end
+
+        -- Delete defaults
+        vim.keymap.del('n', 'grn')
+        vim.keymap.del('n', 'gra')
+        vim.keymap.del('n', 'grr')
+        vim.keymap.del('n', 'gri')
+        vim.keymap.del('n', 'gO')
       end,
     })
 
@@ -86,6 +93,11 @@ return {
     require('mason').setup({
       ui = {
         border = 'rounded',
+        icons = {
+          package_installed = '✓',
+          package_pending = '➜',
+          package_uninstalled = '✗',
+        },
       },
     })
 
@@ -95,6 +107,7 @@ return {
       'jdtls',
       'java-debug-adapter',
       'java-test',
+      'selene',
     })
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
