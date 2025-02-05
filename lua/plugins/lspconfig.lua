@@ -9,7 +9,6 @@ return {
   config = function()
     local lspconfig = require('lspconfig')
     local capabilities = require('blink.cmp').get_lsp_capabilities()
-    local mason_registry = require('mason-registry')
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -18,7 +17,6 @@ return {
           mode = mode or 'n'
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-
         map('<leader>lgd', vim.lsp.buf.definition, '[G]oto Definition')
         map('<leader>lgD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
         map('<leader>lgi', vim.lsp.buf.implementation, '[G]oto Implementation')
@@ -31,9 +29,7 @@ return {
         map('<leader>lds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbol')
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if
-          client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight)
-        then
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -64,6 +60,13 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
           end, '[T]oggle Inlay [H]ints')
         end
+
+        -- Delete defaults
+        vim.keymap.del('n', 'grn')
+        vim.keymap.del('n', 'gra')
+        vim.keymap.del('n', 'grr')
+        vim.keymap.del('n', 'gri')
+        vim.keymap.del('n', 'gO')
       end,
     })
 
@@ -71,8 +74,8 @@ return {
       'ts=typescript',
     }
 
-    local vue_language_server_path =
-      mason_registry.get_package('vue-language-server'):get_install_path()
+    local vue_typescript_plugin_path = vim.fn.stdpath('data')
+      .. '/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin'
 
     local servers = {
       lua_ls = {
@@ -115,7 +118,7 @@ return {
           plugins = {
             {
               name = '@vue/typescript-plugin',
-              location = vue_language_server_path,
+              location = vue_typescript_plugin_path,
               languages = { 'vue' },
             },
           },
@@ -152,8 +155,7 @@ return {
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
-          server.capabilities =
-            vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
         end,
       },
