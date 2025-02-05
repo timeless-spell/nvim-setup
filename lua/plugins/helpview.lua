@@ -4,4 +4,9 @@ return {
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
   },
+  opts = {
+    preview = {
+      icon_provider = 'mini',
+    },
+  },
 }
