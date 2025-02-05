@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-local dmap = vim.keymap.del
 
 -- Close current buffer
 map('n', '<a-d>', '<CMD>bdelete<CR>', { desc = 'Close current bdeletebuffer' })
@@ -35,15 +34,3 @@ map('n', '<leader>lq', vim.diagnostic.setqflist, { desc = 'Open diagnostic [Q]ui
 map('n', '<leader>le', vim.diagnostic.open_float, { desc = 'Open Floating diagnostic ' })
 map('n', '<leader>ln', vim.diagnostic.get_next, { desc = 'Open diagnostic Next Diagnostic' })
 map('n', '<leader>lp', vim.diagnostic.get_prev, { desc = 'Open diagnostic Previous Diagnostic' })
-
--- local v = vim.version.parse(vim.system({ "nvim", "--version" }, { text = true }):wait().stdout)
--- if v == "0.10.*" then
--- 	return
--- else
--- 	-- Deleted default keymaps to avoid duplicates
--- 	dmap({ "n", "x" }, "gra")
--- 	dmap("n", "grr")
--- 	dmap("n", "grn")
--- 	dmap("i", "<c-s>")
--- 	dmap("n", "gri")
--- end
