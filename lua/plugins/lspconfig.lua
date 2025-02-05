@@ -27,9 +27,7 @@ return {
         map('<leader>lds', vim.lsp.buf.document_symbol, '[D]ocument [S]ymbol')
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if
-          client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight)
-        then
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -105,8 +103,7 @@ return {
         function(server_name)
           if server_name ~= 'jdtls' then
             local server = servers[server_name] or {}
-            server.capabilities =
-              vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end
         end,

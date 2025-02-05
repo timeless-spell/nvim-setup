@@ -8,8 +8,7 @@ local jdtls = require('jdtls')
 local jdtls_setup = require('jdtls.setup')
 local jdtls_dap = require('jdtls.dap')
 
-local equinox_launcher_path =
-  vim.fn.glob(jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+local equinox_launcher_path = vim.fn.glob(jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar')
 local path_to_config = jdtls_path .. '/config_linux'
 local lombok_path = jdtls_path .. '/lombok.jar'
 
@@ -22,28 +21,15 @@ local workspace_dir = home .. '/.cache/jdtls/workspace' .. project_name
 local bundles = {
   vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar', true),
 }
-vim.list_extend(
-  bundles,
-  vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar', true), '\n')
-)
+vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. '/extension/server/*.jar', true), '\n'))
 
 local on_attach = function(_, bufnr)
   jdtls.setup_dap({ hotcodereplace = 'auto' })
   jdtls_dap.setup_dap_main_class_configs()
 
   local map = vim.keymap.set
-  map(
-    'n',
-    '<leader>jev',
-    "<cmd>lua require('jdtls').extract_variable()<cr>",
-    { desc = '[JDTLS] Extract variable' }
-  )
-  map(
-    'n',
-    '<leader>joi',
-    "<cmd>lua require('jdtls').organize_imports()<cr>",
-    { desc = '[JDTLS] Extract variable' }
-  )
+  map('n', '<leader>jev', "<cmd>lua require('jdtls').extract_variable()<cr>", { desc = '[JDTLS] Extract variable' })
+  map('n', '<leader>joi', "<cmd>lua require('jdtls').organize_imports()<cr>", { desc = '[JDTLS] Extract variable' })
 end
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
