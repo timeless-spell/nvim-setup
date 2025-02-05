@@ -148,6 +148,7 @@ return {
     vim.list_extend(ensure_installed, {
       'stylua',
       'js-debug-adapter',
+      'selene',
     })
     require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
