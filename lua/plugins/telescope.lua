@@ -40,7 +40,7 @@ return {
           themes.get_dropdown(),
         },
         ['file_browser'] = {
-          path = vim.fn.expand('%:p:h'),
+          path = '%:p:h',
           cwd_to_path = true,
           layout_strategy = 'center',
           layout_config = { height = 0.8, width = 0.8 },
